@@ -1,5 +1,7 @@
 # Tworzenie agentów AI w .NET
 
+Wydział Matematyki i Nauk Informacyjnych Politechniki Warszawskiej
+
 Materiały do wykładów i laboratoriów z projektowania i tworzenia systemów agentowych.
 
 ## Cel
@@ -16,9 +18,9 @@ W trakcie kursu poznamy m.in. LLM, prompting, tool calling, MCP, Skills, embeddi
 
 **.NET jest narzędziem. Uczymy się inżynierii systemów wykorzystujących agentów.**
 
-## TUP Campus
+## Tup Camp
 
-Referencyjnym projektem rozwijanym podczas laboratoriów jest **TUP Campus** — agent pomagający studentom poruszać się po kampusie i korzystać z jego zasobów.
+Referencyjnym projektem rozwijanym podczas laboratoriów będzie **Tup Camp** — agent pomagający studentom poruszać się po kampusie i korzystać z jego zasobów.
 
 Studenci równolegle rozwijają własne projekty agentowe.
 
