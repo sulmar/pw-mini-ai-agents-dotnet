@@ -18,9 +18,9 @@ W trakcie kursu poznamy m.in. LLM, prompting, tool calling, MCP, Skills, embeddi
 
 **.NET jest narzędziem. Uczymy się inżynierii systemów wykorzystujących agentów.**
 
-## Tup Camp
+## Tup Żak
 
-Referencyjnym projektem rozwijanym podczas laboratoriów będzie **Tup Camp** — agent pomagający studentom poruszać się po kampusie i korzystać z jego zasobów.
+Referencyjnym projektem rozwijanym podczas laboratoriów będzie **Tup Żak** — agent pomagający studentom poruszać się po kampusie i korzystać z jego zasobów.
 
 Studenci równolegle rozwijają własne projekty agentowe.
 
