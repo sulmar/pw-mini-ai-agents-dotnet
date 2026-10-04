@@ -24,7 +24,16 @@ Referencyjnym projektem rozwijanym podczas laboratoriów będzie **Tup Żak** �
 
 Studenci równolegle rozwijają własne projekty agentowe.
 
-## [Roadmap kursu](roadmap/roadmap.md)
+## Materiały organizacyjne
+
+- [Projekt semestralny](docs/project.md) — zasady realizacji własnego projektu agentowego i minimalne wymagania.
+
+- [Zasady oceniania](docs/grading.md) — punktacja projektu, kolokwium i zasady ustalania oceny końcowej.
+
+- [Modele LLM](docs/models.md) — dostępne i rekomendowane modele oraz sposoby korzystania z nich.
+
+## Przebieg kursu
+- [Mapa drogowa](roadmap/roadmap.md)
 
 ## Literatura
 
