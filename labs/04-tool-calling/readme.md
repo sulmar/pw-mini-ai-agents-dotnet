@@ -1,8 +1,6 @@
-# Tworzenie agentów AI w .NET
+# Tool Calling
 
-## Laboratorium 04 — Tool Calling
-
-### Jak agent zaczyna działać?
+## Jak agent może korzystać z zewnętrznych narzędzi?
 
 ---
 
