@@ -40,3 +40,12 @@ Studenci równolegle rozwijają własne projekty agentowe.
 - Valliappa Lakshmanan, Hannes Hapke, *Wzorce projektowe w generatywnej AI. Sprawdzone rozwiązania przy budowie agentów i aplikacji GenAI*, Helion.
 - Daniel Costea, *Microsoft Agent Framework in .NET. Build production-ready AI agents and multi-agent systems in C#*, [GitHub](https://github.com/dcostea/AgentFrameworkBook).
 - Chip Huyen, *Inżynieria AI. Tworzenie aplikacji z wykorzystaniem modeli bazowych*, Helion, [GitHub](https://github.com/chiphuyen/aie-book).
+
+
+## Autor
+
+**mgr Marcin Sulecki**  
+Wydział Matematyki i Nauk Informacyjnych  
+Politechnika Warszawska
+
+© Marcin Sulecki / Politechnika Warszawska, 2026
