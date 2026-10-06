@@ -10,5 +10,5 @@
 | **4** | 🔌 **MCP** | [MCP vs API](https://www.youtube.com/watch?v=7j1t3UZA1TY) | Wyjaśnia, po co agentom **MCP** i czym różni się ono od klasycznej integracji przez API. |
 | **5** | 🗺️ **Skills + MCP + RAG + Memory** | [Skills vs MCP vs RAG vs Memory](https://www.youtube.com/watch?v=X4FVEEegCbk) | **Najlepsza mapa pojęć** — pokazuje różnice i zależności między czterema kluczowymi elementami współczesnego agenta. |
 
-**Proponowana kolejność dla studentów:**  
-**Agent → Reasoning & Tools → Skills → MCP → Skills vs MCP vs RAG vs Memory**.
+**Proponowana kolejność:**  
+Agent → Reasoning & Tools → Skills → MCP → Skills vs MCP vs RAG vs Memory.
