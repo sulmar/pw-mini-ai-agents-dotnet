@@ -64,6 +64,9 @@ Po wprowadzeniu LLM możemy **część decyzji** pozostawić modelowi:
 
 Płacimy za to wysoką cenę: **decyzje przestają być w pełni deterministyczne i przewidywalne**.
 
+- **5 Types of AI Agents: Autonomous Functions & Real-World Applications**, Martin Keen / IBM Technology
+https://www.youtube.com/watch?v=fXizBc03D7E&t=1s
+
 ---
 
 ## Historia LLM
