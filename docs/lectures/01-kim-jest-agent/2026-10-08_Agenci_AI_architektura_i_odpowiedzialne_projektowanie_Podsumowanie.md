@@ -7,7 +7,7 @@
 ## 🧭 Omówienie
 - **Najważniejsze wnioski**: Agent AI jest systemem działającym w określonym środowisku: obserwuje otoczenie, interpretuje informacje, wybiera sposób postępowania i wykonuje działania\. Może korzystać z LLM, lecz nie jest z nim tożsamy; jego autonomia zwiększa możliwości, ale wymaga ograniczeń, ewaluacji i kontroli człowieka\.
 - **Kluczowe zagadnienia**: Omówiono rozwój agentów i modeli językowych, różnice między klasycznymi algorytmami, uczeniem maszynowym, LLM i agentami, systemy wieloagentowe, zastosowania w analizie danych, programowaniu i konfiguratorach oraz techniki takie jak prompty, tool calling, MCP, pamięć, embeddingi i ewaluacja\.
-- **Trudności i dalsza nauka**: Największym wyzwaniem jest świadomy podział zadań między AI, klasyczne algorytmy, reguły biznesowe, bazy danych i człowieka\. Dalsza praca obejmuje przygotowanie do kolokwium, rozwój projektu Tubrzak oraz śledzenie materiałów w repozytorium\.
+- **Trudności i dalsza nauka**: Największym wyzwaniem jest świadomy podział zadań między AI, klasyczne algorytmy, reguły biznesowe, bazy danych i człowieka\. Dalsza praca obejmuje przygotowanie do kolokwium, rozwój projektu TupŻak oraz śledzenie materiałów w repozytorium\.
 
 ## 🎯 Cele nauki
 - Zrozumienie definicji, autonomii i środowiska działania agenta AI\.
@@ -92,12 +92,12 @@
         - Pamięć przechowuje informacje przydatne w kolejnych interakcjach, embeddingi są wektorowymi reprezentacjami danych, a ewaluacja służy systematycznej ocenie jakości i bezpieczeństwa działania\.
     - **Generatory kodu**
         - Można korzystać z generatorów kodu, lecz autor musi rozumieć wygenerowane rozwiązanie oraz umieć uzasadnić wybór implementacji, modelu, techniki i bazy danych\.
-        - Przykładowo zastosowanie Reddis/Python? jako bazy wektorowej dla embeddingów wymaga merytorycznego uzasadnienia\. Samo automatyczne wygenerowanie kodu nie zwalnia z odpowiedzialności za jego działanie\.
+        - Przykładowo zastosowanie Redis jako bazy wektorowej dla embeddingów wymaga merytorycznego uzasadnienia\. Samo automatyczne wygenerowanie kodu nie zwalnia z odpowiedzialności za jego działanie\.
     - **Kryteria oceny**
         - Oceniana jest demonstracja całego rozwiązania oraz umiejętność wyjaśnienia przyjętych decyzji, a nie samo użycie konkretnej technologii\.
-        - Jeżeli RAG/ Raga?, rad, raga, beton lub inne narzędzie nie pasuje do projektu, jego pominięcie może być uzasadnione\. Istotne jest dopasowanie technologii do celu, a nie mechaniczne wykorzystanie wszystkich dostępnych rozwiązań\.
+        - Jeżeli RAG lub inne narzędzie nie pasuje do projektu, jego pominięcie może być uzasadnione\. Istotne jest dopasowanie technologii do celu, a nie mechaniczne wykorzystanie wszystkich dostępnych rozwiązań\.
     - **Projekt referencyjny i repozytorium**
-        - Projekt Tubrzak ma być rozwijany krok po kroku, a materiały związane z jego realizacją publikowane w repozytorium kursu\. Repozytorium obejmuje między innymi dokumentację w sekcji `docs`, ściągę pojęć, zasady oceniania, wizję projektu oraz informacje dotyczące agenta, modelu, calling i MCP\.
+        - Projekt TupŻak ma być rozwijany krok po kroku, a materiały związane z jego realizacją publikowane w repozytorium kursu\. Repozytorium obejmuje między innymi dokumentację w sekcji `docs`, ściągę pojęć, zasady oceniania, wizję projektu oraz informacje dotyczące agenta, modelu, calling i MCP\.
         - Repozytorium ma pełnić funkcję centralnego miejsca przechowywania materiałów\. Uczestnicy mogą regularnie je śledzić i dodać do obserwowanych\. Wspomniano także o możliwej pomocy Klaudiusz przy realizacji projektu\.
 - **Dostęp do modeli i wybór modelu**
     - **Modele płatne i lokalne**
@@ -135,7 +135,7 @@
 ## ✅ Zadania do wykonania \(plan praktyczny\)
 - \[ \] Przygotować się do kolokwium z pojęć: LLM, prompty, tool calling, MCP, R, pamięć, multiagent i ewaluacja\.
 - \[ \] Korzystać ze ściągi i kolejnych materiałów publikowanych w repozytorium kursu\.
-- \[ \] Regularnie śledzić repozytorium projektu Tubrzak i dodać je do obserwowanych\.
+- \[ \] Regularnie śledzić repozytorium projektu TupŻak i dodać je do obserwowanych\.
 - \[ \] Zapoznać się z dokumentacją w sekcji `docs`, zasadami oceniania, wizją projektu oraz materiałami dotyczącymi agenta, modelu, calling i MCP\.
 - \[ \] Przygotować i umieć uzasadnić wybór modelu, techniki, narzędzi, bazy danych oraz zakresu zastosowania AI w projekcie\.
 - \[ \] Sprawdzić dostępne sposoby uruchamiania modeli: modele płatne, Ollama, komputery laboratoryjne i API\.
