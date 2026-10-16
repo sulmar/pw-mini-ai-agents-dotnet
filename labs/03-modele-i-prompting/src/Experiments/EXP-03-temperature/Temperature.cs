@@ -8,7 +8,7 @@ public static class Temperature
 
     private const int Repetitions = 5;
 
-    private static readonly double[] Temperatures = [0.0, 0.5, 1.0];
+    private static readonly double[] Temperatures = [0.0, 0.2, 1.0];
 
     public static async Task RunAsync(OllamaClient client)
     {

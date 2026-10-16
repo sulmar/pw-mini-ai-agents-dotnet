@@ -3,8 +3,8 @@ public static class ModelComparison
 {
     private static readonly string[] Models =
     [
-        "gemma3:4b",
-        "qwen3:4b"
+        "qwen3:4b",
+        "deepseek-r1"
     ];
 
     public static async Task RunAsync(OllamaClient client)
