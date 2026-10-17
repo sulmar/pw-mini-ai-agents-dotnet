@@ -18,8 +18,11 @@ public static class Extraction
             floor = new { type = new[] { "integer", "null" } },
             elevator = new { type = new[] { "boolean", "null" } }
         },
-        required = new[] { "floor", "elevator" }
+        required = new[] { "floor", "elevator" },
+        additionalProperties = false
     };
+
+    public const string JsonMode = "json";
 
     public static string Prompt(string note, IEnumerable<LabeledNote>? examples = null)
     {
@@ -93,7 +96,7 @@ public static class Extraction
 
     // Uruchamia model dla wszystkich notatek i liczy metryki
     public static async Task<Metrics> EvaluateAsync(
-        OllamaClient client,
+        GeminiClient client,
         string model,
         IReadOnlyList<LabeledNote> notes,
         Func<string, string> buildPrompt,
@@ -104,19 +107,15 @@ public static class Extraction
 
         foreach (var note in notes)
         {
-            var watch = Stopwatch.StartNew();
-
             var response = await client.GenerateAsync(
                 model,
                 buildPrompt(note.Note),
                 temperature,
                 format);
 
-            watch.Stop();
-
             var result = Parse(response, out var error);
 
-            metrics.Add(note, result, watch.ElapsedMilliseconds);
+            metrics.Add(note, result, client.LastLatencyMs);
 
             Console.WriteLine(result is null
                 ? $"✗ {note.Id} \"{note.Note}\" => {error}: {response}"

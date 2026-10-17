@@ -3,7 +3,15 @@ using var http = new HttpClient
     Timeout = TimeSpan.FromMinutes(5)
 };
 
-var client = new OllamaClient(http);
+var apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+
+if (string.IsNullOrWhiteSpace(apiKey))
+{
+    Console.WriteLine("Ustaw zmienną środowiskową GEMINI_API_KEY (klucz z https://aistudio.google.com/apikey)");
+    return;
+}
+
+var client = new GeminiClient(http, apiKey);
 
 var experiment = args.FirstOrDefault();
 

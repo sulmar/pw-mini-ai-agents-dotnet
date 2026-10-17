@@ -3,11 +3,11 @@ public static class ModelComparison
 {
     private static readonly string[] Models =
     [
-        "qwen3:4b",
-        "deepseek-r1"
+        "gemini-3.5-flash-lite",
+        "gemini-3.8-flash"
     ];
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(GeminiClient client)
     {
         foreach (var model in Models)
         {
@@ -17,7 +17,8 @@ public static class ModelComparison
                 client,
                 model,
                 TestData.Examples,
-                note => Extraction.Prompt(note));
+                note => Extraction.Prompt(note),
+                format: Extraction.JsonMode);
 
             ResultsCsv.Append("EXP-01", model, "zero-shot", 0, metrics);
         }

@@ -1,16 +1,17 @@
 // EXP-04: ekstrakcja danych do JSON i walidacja
 public static class StructuredOutput
 {
-    private const string Model = "gemma3:4b";
+    private const string Model = "gemini-3.5-flash-lite";
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(GeminiClient client)
     {
         // Format JSON opisany tylko w prompcie vs natywny tryb JSON Schema w Ollama
         var variants = new (string Name, object? Format)[]
-        {
+{
             ("prompt", null),
+            ("json-mode", Extraction.JsonMode),
             ("json-schema", Extraction.Schema)
-        };
+};
 
         foreach (var (name, format) in variants)
         {

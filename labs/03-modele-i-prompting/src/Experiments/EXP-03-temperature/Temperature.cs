@@ -4,13 +4,12 @@ using System.Diagnostics;
 public static class Temperature
 {
     // Ten sam model i prompt - zmieniamy tylko temperaturę
-    private const string Model = "gemma3:4b";
-
-    private const int Repetitions = 5;
+    private const string Model = "gemini-3.5-flash-lite";
+    private const int Repetitions = 3;
 
     private static readonly double[] Temperatures = [0.0, 0.2, 1.0];
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(GeminiClient client)
     {
         var notes = TestData.Examples;
 
@@ -27,18 +26,15 @@ public static class Temperature
 
                 for (var i = 0; i < Repetitions; i++)
                 {
-                    var watch = Stopwatch.StartNew();
-
                     var response = await client.GenerateAsync(
                         Model,
                         Extraction.Prompt(note.Note),
-                        temperature);
-
-                    watch.Stop();
+                        temperature,
+                        Extraction.JsonMode);
 
                     var result = Extraction.Parse(response, out var error);
 
-                    metrics.Add(note, result, watch.ElapsedMilliseconds);
+                    metrics.Add(note, result, client.LastLatencyMs);
                     answers.Add(result?.ToString() ?? error!);
                 }
 

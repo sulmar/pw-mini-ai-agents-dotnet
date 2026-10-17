@@ -1,9 +1,9 @@
 // EXP-02: wpływ zero-shot, one-shot i few-shot na jakość ekstrakcji
 public static class Prompting
 {
-    private const string Model = "deepseek-r1";
+    private const string Model = "gemini-3.5-flash-lite";
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(GeminiClient client)
     {
         var examples = TestData.PromptExamples;
 
@@ -19,10 +19,11 @@ public static class Prompting
             Console.WriteLine($"\nWariant: {name}");
 
             var metrics = await Extraction.EvaluateAsync(
-                client,
-                Model,
-                TestData.Examples,
-                buildPrompt);
+    client,
+    Model,
+    TestData.Examples,
+    buildPrompt,
+    format: Extraction.JsonMode);
 
             ResultsCsv.Append("EXP-02", Model, name, 0, metrics);
         }
