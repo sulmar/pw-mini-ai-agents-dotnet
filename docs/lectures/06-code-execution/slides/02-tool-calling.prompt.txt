@@ -1,0 +1,9 @@
+Generate ONE educational lecture slide, landscape 3:2 1536x1024. Use attached image as exact STYLE reference only. Same dark forest green chalkboard texture, handwritten sans chalk lettering, rounded outline rectangles, white arrows, green yellow light blue chalk palette, generous whitespace. No characters robots photos icons.
+Title large white top left "Tool Calling", long white horizontal chalk rule beneath across slide.
+Under rule small white request in quotation marks: „Ile kosztuje świecenie lampki przez 500 godzin?”
+Main diagram three boxes horizontally: left light blue outlined "LLM"; center yellow outlined "Aplikacja .NET"; right green outlined "Gotowe narzędzie" with smaller green inner rounded box "CalculateEnergyCost". All interiors remain dark green.
+Upper arrows left to center to right. Above left→center label "1. Nazwa + argumenty", below it small white example "CalculateEnergyCost(8.5, 500, 4.50)". Above center→right label "2. Wywołanie funkcji".
+Lower return arrows right to center to left, visibly separate from upper arrows. Above right→center label "3. Wynik", above center→left label "4. Tool Result". Near return path white "19,13 zł".
+Beneath diagram centered two short white lines: "Programista pisze funkcję." and "Model wybiera narzędzie i podaje argumenty."
+Bottom large white sentence "Model zleca. Aplikacja wykonuje."
+Exact Polish text, correct diacritics. Keep labels clear, no overlapping arrows or text. Main diagram dominates, sparse clean reference-matching layout.

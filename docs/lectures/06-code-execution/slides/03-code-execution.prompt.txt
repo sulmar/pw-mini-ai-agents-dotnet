@@ -1,0 +1,20 @@
+Generate ONE educational lecture slide, landscape exactly 3:2, 1536x1024. Attached slide is exact STYLE AND LAYOUT reference. Match its dark forest green chalkboard texture, handwritten sans chalk lettering, rounded outline rectangles, white arrows, light blue yellow light green palette, large white top-left title with full-width chalk rule, generous negative space. Diagram only, no robots, characters, photographs.
+Replace content with:
+Title "Code Execution".
+Below title rule white quote: „Ile kosztuje świecenie lampki przez 500 godzin?”
+Main diagram three boxes aligned horizontally as in reference:
+LEFT light blue outline box "LLM".
+CENTER yellow outline box "Aplikacja .NET", with small yellow subtitle "ExecutePython(code)".
+RIGHT green outline box headed "Sandbox", inside a smaller green rounded outline box with label "Python" and exact readable code on two lines:
+koszt = 8.5 * 500 / 1000 * 4.50
+print(koszt)
+Give sandbox enough width for code. Main left box may be narrow, center medium, right largest.
+Top forward arrows white: LLM → Aplikacja .NET, label in yellow "1. Wygenerowany kod"; Aplikacja .NET → Sandbox, label yellow "2. Uruchomienie".
+Bottom return arrows white: Sandbox → Aplikacja .NET, label yellow "3. Wynik lub błąd", small white output "19.125"; Aplikacja .NET → LLM, label yellow "4. Tool Result", small white output "19.125".
+Keep arrows outside boxes, no overlapping labels. If needed break labels into two lines.
+Below diagram centered white statements:
+"Model pisze kod rozwiązujący zadanie."
+"Aplikacja uruchamia go w kontrolowanym środowisku."
+At bottom large white takeaway:
+"Model tworzy kod. Sandbox go wykonuje."
+All text exactly supplied, correct Polish diacritics. Keep the same title scale, hierarchy, chalk stroke texture and clean layout as reference. Dark green interiors, no solid box fills. No extra labels.

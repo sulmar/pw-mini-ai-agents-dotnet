@@ -1,0 +1,24 @@
+Generate ONE educational lecture slide, exactly landscape 3:2, 1536x1024. Attached image is exact STYLE reference: match dark forest green chalkboard texture, hand-drawn sans chalk lettering, rounded rectangular outline boxes, white arrows, light blue yellow light green palette, generous negative space. No people robots photos. Large white title top left "Code Mode", long white horizontal chalk rule beneath across almost full width.
+Below rule white request in Polish quotes: „Sprawdź moc lampki i oblicz koszt 500 godzin.”
+Main diagram:
+Left a narrow light blue outline box "LLM".
+Center a LARGE yellow rounded outline box "Sandbox", with smaller white subheading "Kod steruje narzędziami". Inside this sandbox a white handwritten code block, exactly:
+const stan = await tools.GetLightStatus();
+const koszt = stan.powerW * 500 / 1000 * 4.50;
+return { koszt };
+Code must fit comfortably, may use small but legible handwriting; keep punctuation and identifiers exact.
+Right outside sandbox two stacked green rounded outline boxes, upper "GetLightStatus", lower "Inne narzędzia", with green heading "Udostępnione API".
+White forward arrow from LLM to Sandbox above midline labeled yellow "1. Kod + wywołania narzędzi".
+White return arrow from Sandbox to LLM below midline labeled yellow "4. Wybrany wynik", small white output "{ koszt: 19.125 }".
+From Sandbox to upper green GetLightStatus box a white rightward arrow labeled yellow "2. Wywołanie".
+From upper green GetLightStatus box back into Sandbox a separate white leftward arrow below it labeled yellow "3. Dane".
+This explicitly shows tool results returning into code in sandbox, rather than separate model turns. Keep every arrow outside text blocks, labels readable with no overlap. Lower green Inne narzędzia box represents additional available API; no additional arrow needed.
+Below diagram two centered white statements:
+"Model pisze kod łączący narzędzia."
+"Pętle, warunki i przetwarzanie danych działają w sandboxie."
+At bottom large white takeaway:
+"Narzędzia wywołuje kod. Model otrzymuje wynik."
+Exact Polish spelling and diacritics. No additional text, no solid box fills. Consistent same-series chalk aesthetics as reference.
+
+Correction:
+Edit this slide only to fix the tool return path. Preserve all text, code, colors, chalk texture, layout, dimensions and other shapes unchanged. Change the white return arrow labeled "3. Dane": its starting point must be the BOTTOM LEFT edge of the UPPER green "GetLightStatus" box, then bend down and left through the gap between sandbox and tools, ending with a LEFTWARD arrowhead at the right edge of Sandbox near the code. It must visibly originate at GetLightStatus, NOT at the lower "Inne narzędzia" box. Shift the lower "Inne narzędzia" box down slightly if needed to leave clear space for the return path. The lower Inne narzędzia box has NO connecting arrows. Keep label "3. Dane" beside return arrow. Do not change anything else.
