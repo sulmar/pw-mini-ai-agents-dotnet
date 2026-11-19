@@ -1,0 +1,12 @@
+Generate ONE minimalist Polish lecture slide landscape 3:2 1536x1024. Attached image is exact STYLE reference: black charcoal chalkboard texture, white handwritten sans title upper left with long white chalk underline, rounded colored chalk outline boxes, white arrows, lots of empty space. Diagram only, no photos people robots icons paragraphs footer or extra text.
+Title exactly "Shelly Lab: programista i tester".
+Main flow in upper middle, three horizontally arranged large boxes with generous arrow gaps:
+LEFT light green outlined "Programista".
+CENTER light blue outlined "Tester".
+RIGHT yellow outlined "Symulator".
+White arrow Programista → Tester with small white label "Skrypt".
+White arrow Tester → Symulator with small white label "Testy".
+Below Symulator, two branching paths:
+FAILURE path from bottom left edge of Symulator down and LEFT across slide, returning upward with arrowhead into bottom of Programista. Label this long lower return arrow exactly "Błędy: raport do poprawy". Path does not pass through any box.
+SUCCESS path from bottom right edge of Symulator down to a small light green rounded box below it, label inside exactly "Gotowy skrypt". Label beside downward success arrow exactly "Testy zaliczone".
+Separate return loop vertically from success box so lines do not cross. Lower return loop can pass through y=740, success box near x=1250 y=620. Keep comfortable margins. Label "Błędy: raport do poprawy" centrally below the horizontal return segment. No diamond necessary, only branch arrows. All box interiors black, headings in outline color. Precisely supplied Polish text and correct diacritics: "Błędy", "Testy zaliczone", "Gotowy skrypt". Keep reference's chalk strokes and simplicity.
