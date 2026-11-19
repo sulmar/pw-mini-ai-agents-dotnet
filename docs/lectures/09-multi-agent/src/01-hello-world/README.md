@@ -1,6 +1,21 @@
 # MAF Hello World: Autor i Recenzent
 
-Minimalna aplikacja konsolowa .NET 10 z Microsoft Agent Framework.
+Minimalna aplikacja konsolowa .NET 10 z Microsoft Agent Framework i Claude (Anthropic API).
+
+## Gdzie jest projekt
+
+Projekt znajduje się w repozytorium w katalogu:
+
+```text
+docs/lectures/09-multi-agent/src/01-hello-world/
+├── MultiAgentHelloWorld.csproj   # plik projektu (pakiety: Microsoft.Agents.AI.Workflows, Anthropic)
+├── Program.cs                    # cały przykład: dwaj agenci i workflow sekwencyjny
+└── README.md                     # ten plik
+```
+
+Wszystkie polecenia poniżej uruchamiaj z katalogu głównego repozytorium
+(`pw-mini-ai-agents-dotnet`). Jeśli jesteś już w katalogu projektu, pomiń
+opcję `--project` i wpisz po prostu `dotnet run`.
 
 ```text
 Polecenie użytkownika -> Autor -> Recenzent -> gotowe powitanie
@@ -14,22 +29,22 @@ Konsola pokazuje odpowiedzi obu agentów strumieniowo.
 
 ## Uruchomienie
 
-Wymagania: SDK .NET 10, dostęp do NuGet oraz klucz API OpenAI z dostępem do wybranego modelu.
+Wymagania: SDK .NET 10, dostęp do NuGet oraz klucz API Anthropic (Claude) z dostępem do wybranego modelu.
 Wywołania modelu są płatne zgodnie z kontem dostawcy. Klucza nie zapisujemy w repozytorium.
 
 Z katalogu głównego repozytorium (zsh/bash):
 
 ```bash
 # Wczytaj klucz bez pokazywania go w terminalu ani historii poleceń.
-read -s 'OPENAI_API_KEY?Klucz API: '
-export OPENAI_API_KEY
+read -s 'ANTHROPIC_API_KEY?Klucz API: '
+export ANTHROPIC_API_KEY
 echo
-export OPENAI_MODEL='gpt-4.1-mini'
+export ANTHROPIC_MODEL='claude-opus-5-5'
 
 dotnet run --project docs/lectures/09-multi-agent/src/01-hello-world
 ```
 
-Polecenie `read` powyżej jest przeznaczone dla zsh. W bash użyj `read -s -p 'Klucz API: ' OPENAI_API_KEY`.
+Polecenie `read` powyżej jest przeznaczone dla zsh. W bash użyj `read -s -p 'Klucz API: ' ANTHROPIC_API_KEY`.
 
 Możesz przekazać własne zadanie:
 
@@ -38,7 +53,7 @@ dotnet run --project docs/lectures/09-multi-agent/src/01-hello-world -- \
   "Przywitaj studentów na prezentacji Shelly Lab."
 ```
 
-Model można zmienić zmienną `OPENAI_MODEL`. W przypadku braku klucza program
+Model można zmienić zmienną `ANTHROPIC_MODEL` (np. `claude-sonnet-5-5` lub `claude-haiku-5-5`). W przypadku braku klucza program
 kończy działanie z komunikatem i kodem 1. Treść odpowiedzi jest niedeterministyczna.
 
 ## Co pokazać studentom
@@ -62,6 +77,7 @@ to osobny etap z potwierdzeniem egzekwowanym przez aplikację.
 
 ## Dokumentacja
 
+- [Claude API: C# SDK](https://platform.claude.com/docs/en/get-started)
 - [Microsoft Learn: Sequential orchestration](https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/sequential?pivots=programming-language-csharp)
 
 Wersje pakietów są zapisane w pliku projektu.

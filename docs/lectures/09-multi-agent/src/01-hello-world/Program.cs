@@ -1,18 +1,21 @@
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
-using OpenAI;
+using Anthropic;
 
 // Jeden model, dwie role. Klucz ustawiamy w środowisku, nie w kodzie.
-var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+var apiKey = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
 if (string.IsNullOrWhiteSpace(apiKey))
 {
-    Console.Error.WriteLine("Ustaw zmienną OPENAI_API_KEY przed uruchomieniem przykładu.");
+    Console.Error.WriteLine("Ustaw zmienną ANTHROPIC_API_KEY przed uruchomieniem przykładu.");
     return 1;
 }
 
-var model = Environment.GetEnvironmentVariable("OPENAI_MODEL") ?? "gpt-4.1-mini";
-using IChatClient client = new OpenAIClient(apiKey).GetChatClient(model).AsIChatClient();
+var model = Environment.GetEnvironmentVariable("ANTHROPIC_MODEL") ?? "claude-opus-5-5";
+// Oficjalne SDK Anthropic udostępnia IChatClient z Microsoft.Extensions.AI,
+// więc reszta kodu MAF nie zależy od dostawcy modelu.
+using IChatClient client = new AnthropicClient { ApiKey = apiKey }
+    .AsIChatClient(defaultModelId: model, defaultMaxOutputTokens: 1024);
 
 // 1. Każdy agent ma własną nazwę i instrukcję.
 AIAgent author = new ChatClientAgent(client,
