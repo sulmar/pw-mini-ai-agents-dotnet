@@ -1,0 +1,31 @@
+{
+  "admin": {
+    "listen": "127.0.0.1:2019"
+  },
+  "apps": {
+    "http": {
+      "servers": {
+        "lab": {
+          "listen": [
+            "127.0.0.1:8080"
+          ],
+          "routes": [
+            {
+              "handle": [
+                {
+                  "@id": "lab-proxy",
+                  "handler": "reverse_proxy",
+                  "upstreams": [
+                    {
+                      "dial": "127.0.0.1:5101"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ApiA/ApiA.csproj" />
+    <Project Path="src/ApiB/ApiB.csproj" />
+    <Project Path="src/Caddy.Mcp/Caddy.Mcp.csproj" />
+  </Folder>
+</Solution>

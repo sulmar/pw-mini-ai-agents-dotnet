@@ -1,0 +1,9 @@
+Generate ONE minimalist Polish lecture slide, exactly 3:2 landscape 1536x1024. Attached image is exact STYLE reference: near-black charcoal chalkboard with subtle chalk texture, white handwritten sans lettering, rounded chalk outlines light green yellow light blue, white arrows, lots of empty space. No people robots photos icons commentary paragraphs footnotes.
+Title large white upper left "Wspólny cel, różne role". Long white chalk horizontal rule beneath across almost full width.
+Simple main diagram centered vertically:
+Left small white rounded outline box "Użytkownik".
+Center large yellow rounded outline enclosure with yellow header "Zespół agentów". Inside three evenly spaced small rounded outline boxes in one horizontal row: light blue "Planuje", light green "Wykonuje", light blue "Sprawdza". White short arrows between these inner boxes pointing right.
+Right small light green rounded outline box "Wynik".
+White arrow from Użytkownik to left edge of team enclosure, label "Cel". White arrow from right edge team enclosure to Wynik, no label.
+Give team enclosure enough width; user and result boxes compact. Keep all interiors black. Beneath entire diagram ONE short centered white sentence "Każdy agent odpowiada za swoją część zadania."
+Only exact specified text, correct Polish diacritics. Preserve reference simplicity, clear spacing and readable lettering. No extra nodes, extra arrows or decorations.

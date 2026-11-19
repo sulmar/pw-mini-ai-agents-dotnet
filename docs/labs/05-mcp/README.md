@@ -1,248 +1,184 @@
-# Tworzenie agentów AI w .NET
+# Laboratorium 05 — Caddy sterowany przez MCP
 
-## Laboratorium 05 — Model Context Protocol (MCP)
+**C# / .NET 10 · 90 minut · lokalne procesy, bez kontenerów**
 
-### Jak udostępniać narzędzia, dane i instrukcje aplikacjom AI?
+## Cel
 
----
-
-**Marcin Sulecki**  
-marcin.sulecki@pw.edu.pl
-
-## Cel laboratorium
-
-Podczas poprzedniego laboratorium poznaliśmy **Tool Calling** — mechanizm pozwalający modelowi językowemu wybierać i wywoływać funkcje udostępnione przez aplikację.
-
-Tym razem zajmiemy się **Model Context Protocol (MCP)**.
-
-MCP pozwala aplikacjom udostępniać swoje możliwości w ustandaryzowany sposób, niezależnie od konkretnego modelu językowego.
-
-Poznamy trzy podstawowe mechanizmy:
-
-| Mechanizm | Przeznaczenie | Przykład Shelly |
-|---|---|---|
-| **Tools** | Wykonywanie operacji | Włącz lampkę |
-| **Resources** | Udostępnianie danych i kontekstu | Odczytaj informacje o urządzeniu |
-| **Prompts** | Udostępnianie szablonów interakcji | Przygotuj raport zużycia energii |
-
-**Pytanie przewodnie:**
-
-> Kiedy udostępnić funkcję jako Tool, kiedy dane jako Resource, a kiedy instrukcję jako Prompt?
-
-## 1. Architektura MCP
-
-W architekturze MCP występują trzy podstawowe elementy:
-
-- **MCP Host** — aplikacja zarządzająca połączeniami z serwerami MCP.
-- **MCP Client** — komponent komunikujący się z serwerem MCP.
-- **MCP Server** — aplikacja udostępniająca Tools, Resources i Prompts.
+Zbudujesz narzędzia MCP, które odczytują konfigurację Caddy i przełączają ruch między dwoma backendami. Gotowy szkielet zawiera serwer MCP, klienta HTTP do API Caddy oraz dwie aplikacje ASP.NET Core. Do uzupełnienia są trzy metody w `src/Caddy.Mcp/CaddyTools.cs`.
 
 ```mermaid
 flowchart LR
-    Host["MCP Host"] --> Client["MCP Client"]
-    Client <-->|MCP| Server["Shelly MCP Server"]
-
-    Server --> Tools["Tools"]
-    Server --> Resources["Resources"]
-    Server --> Prompts["Prompts"]
-
-    Tools --> API["Shelly HTTP API"]
-    Resources --> API
+    Inspector["MCP Inspector / host AI"] <-->|"MCP · stdio"| MCP["Caddy.Mcp · C#"]
+    MCP -->|"HTTP · 2019"| Admin["Caddy Admin API"]
+    Browser["Przeglądarka / curl"] -->|"HTTP · 8080"| Caddy["Caddy reverse proxy"]
+    Admin -->|"konfiguracja"| Caddy
+    Caddy --> A["api-a · 5101"]
+    Caddy --> B["api-b · 5102"]
 ```
 
-**Ważne:** serwer MCP nie wymaga modelu językowego.
+MCP nie wymaga modelu językowego. Inspector jest klientem testowym: odkrywa narzędzia i pozwala je wywoływać. W aplikacji AI te same narzędzia mogą być wybierane przez model, a host odpowiada za ich wywołanie.
 
-Możemy komunikować się z nim bezpośrednio, wykorzystując MCP Inspector.
+## Czym jest Caddy?
 
-## 2. Przykład — Shelly
+Caddy to serwer WWW, który może serwować pliki, zarządzać HTTPS i działać jako **reverse proxy**: przyjmuje żądanie i przekazuje je do backendu. W tym labie klient zawsze korzysta z portu 8080, a my zmieniamy aplikację, do której trafia ruch.
 
-Wykorzystamy znane z poprzedniego laboratorium inteligentne gniazdko Shelly Plug S Gen3.
+Caddy obsługuje czytelny Caddyfile i natywną konfigurację JSON. Używamy JSON, ponieważ API administracyjne operuje na tym samym modelu konfiguracji. Nie potrzebujemy domeny ani certyfikatów: wszystkie usługi działają lokalnie przez HTTP.
 
-W repozytorium Shelly znajdują się przykłady:
-
-| Projekt | Przeznaczenie |
+| Adres | Rola |
 |---|---|
-| `00-Shelly.Simulator` | Symulator urządzenia Shelly |
-| `03-Shelly.Mcp` | Serwer MCP |
-| `04-Shelly.McpClient` | Klient MCP |
+| `http://127.0.0.1:8080` | Ruch użytkowników przez Caddy |
+| `http://127.0.0.1:2019` | API administracyjne Caddy |
+| `http://127.0.0.1:5101` | Backend `api-a` |
+| `http://127.0.0.1:5102` | Backend `api-b` |
 
-Serwer MCP komunikuje się z urządzeniem przez HTTP API.
+W `caddy/caddy.json` handler `reverse_proxy` ma identyfikator `@id: lab-proxy`. Dzięki temu API pozwala odwoływać się do niego przez `/id/lab-proxy`, bez znajomości pozycji w tablicy tras.
 
-Klient MCP odkrywa możliwości serwera i może udostępniać narzędzia modelowi językowemu.
+| Operacja HTTP | Znaczenie |
+|---|---|
+| `GET /config/` | Bieżąca konfiguracja |
+| `GET /id/lab-proxy/upstreams` | Lista backendów naszego proxy |
+| `PATCH /id/lab-proxy/upstreams` | Zastąpienie listy backendów |
+| `POST /load` | Wczytanie całej konfiguracji, np. reset labu |
 
-## 3. Tools
+Zmiany przez API dotyczą działającego procesu i nie edytują pliku `caddy.json`. W labie plik jest konfiguracją początkową; ponowne wczytanie przywraca `api-a`. Pojedyncze żądanie zmiany jest atomowe, ale sekwencja odczyt–modyfikacja–zapis nie jest jedną transakcją. Dlatego zmieniamy tylko listę upstreamów, zamiast nadpisywać całą konfigurację.
 
-Tools umożliwiają klientowi MCP wykonywanie operacji udostępnionych przez serwer.
+## Przygotowanie przed zajęciami
 
-Przykładowe narzędzia:
+Zainstaluj:
 
-- włączenie lampki,
-- wyłączenie lampki,
-- odczyt aktualnego stanu,
-- odczyt poboru mocy.
+- [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0),
+- [Caddy 2 — instalacja](https://caddyserver.com/docs/install),
+- [Node.js LTS](https://nodejs.org/) z npm, potrzebny do MCP Inspector,
+- edytor C# oraz curl (na Windows używaj `curl.exe`).
 
-W aplikacji korzystającej z LLM model może wybrać odpowiednie narzędzie na podstawie polecenia użytkownika.
+Caddy: macOS `brew install caddy`, Windows `winget install --id CaddyServer.Caddy --exact`; na Linux skorzystaj z instrukcji dla swojej dystrybucji. Jeżeli Homebrew uruchomiło Caddy jako usługę, zatrzymaj tę usługę przed labem (`brew services stop caddy`).
 
-Przykład:
+Sprawdź:
 
-> Włącz lampkę.
-
-Model wybiera narzędzie, a klient MCP przekazuje wywołanie do serwera.
-
-## 4. Resources
-
-Resources służą do udostępniania danych i kontekstu.
-
-Mogą reprezentować między innymi:
-
-- dokumenty,
-- pliki,
-- konfigurację,
-- informacje o urządzeniach,
-- dane udostępniane przez zewnętrzne systemy.
-
-Przykładowy zasób:
-
-```text
-shelly://device/info
+```sh
+dotnet --version
+caddy version
+node --version
+npm --version
 ```
 
-Mógłby zawierać:
+Otwórz terminal w **katalogu tego laboratorium** (`docs/labs/05-mcp`). Wszystkie kolejne polecenia zakładają ten katalog roboczy. Na Windows polecenia curl w przykładach zastąp przez `curl.exe`.
+
+```sh
+dotnet restore CaddyLab.slnx
+dotnet build CaddyLab.slnx --no-restore
+npx --yes @modelcontextprotocol/inspector --help
+```
+
+Pierwsze pobranie pakietów wymaga internetu. Przygotowanie środowiska wykonaj przed zajęciami. Nie potrzebujesz Ollama, klucza API ani instalacji narzędzi kontenerowych.
+
+## Uruchomienie (0–15 min)
+
+Uruchom trzy osobne terminale; pozostaw procesy włączone.
+
+**Terminal 1 — api-a:**
+
+```sh
+dotnet run --no-launch-profile --project src/ApiA
+```
+
+**Terminal 2 — api-b:**
+
+```sh
+dotnet run --no-launch-profile --project src/ApiB
+```
+
+**Terminal 3 — Caddy:**
+
+```sh
+caddy run --config caddy/caddy.json
+```
+
+W czwartym terminalu sprawdź:
+
+```sh
+curl http://127.0.0.1:5101/
+curl http://127.0.0.1:5102/
+curl http://127.0.0.1:8080/
+curl http://127.0.0.1:8080/api/products
+curl http://127.0.0.1:2019/id/lab-proxy/upstreams
+```
+
+Bezpośrednio backendy zwracają odpowiednio `service: api-a` i `service: api-b`. Przez Caddy początkowo odpowiada `api-a`. Każdy backend obsługuje `/`, `/health` i `/api/products`; proxy zachowuje ścieżkę żądania.
+
+## Zadania (15–80 min)
+
+Szczegółowe wymagania i kryteria odbioru: **[zadania Caddy MCP](caddy-experiments.md)**.
+
+| Czas | Zadanie | Efekt |
+|---|---|---|
+| 15–25 min | Poznaj API i uruchom Inspector | Wywołanie gotowego `get_lab_info` |
+| 25–40 min | TODO 1: `get_configuration` | Konfiguracja Caddy jako wynik narzędzia |
+| 40–50 min | TODO 2: `get_active_backend` | Lista upstreamów |
+| 50–70 min | TODO 3: `switch_backend` | Walidacja nazwy i przełączenie proxy |
+| 70–80 min | Błędy i powrót do api-a | Czytelne błędy i działające cofnięcie |
+| 80–90 min | Demonstracja i omówienie | Odbiór rozwiązania |
+
+### MCP Inspector
+
+Zbuduj serwer, a następnie uruchom Inspector, który sam uruchomi proces MCP:
+
+```sh
+dotnet build src/Caddy.Mcp
+npx --yes @modelcontextprotocol/inspector dotnet src/Caddy.Mcp/bin/Debug/net10.0/Caddy.Mcp.dll
+```
+
+Otwórz adres wypisany przez Inspector (z tokenem, jeśli jest podany). Połącz transportem **STDIO**, odśwież listę Tools i wywołaj `get_lab_info`. Zobaczysz cztery narzędzia; trzy na początku zwracają komunikat `TODO`. To oczekiwane zachowanie szkieletu.
+
+Po edycji kodu rozłącz serwer w Inspectorze, ponownie zbuduj projekt i połącz go ponownie. Jeśli plik jest blokowany na Windows, zatrzymaj Inspector przed budowaniem. Nie uruchamiaj osobno serwera MCP w terminalu: czeka on na komunikaty protokołu, a Inspector zarządza jego stdin/stdout. Logi trafiają na stderr; nie dodawaj `Console.WriteLine` do serwera.
+
+### Podłączenie do hosta AI (opcjonalnie po zadaniach)
+
+W hoście obsługującym lokalne serwery MCP stdio ustaw poniższe pola. Zastąp ścieżkę absolutną ścieżką na swoim komputerze; szczegóły formatu konfiguracji zależą od hosta.
 
 ```json
 {
-  "name": "Lampka biurkowa",
-  "model": "Shelly Plug S Gen3",
-  "location": "Pokój 204"
+  "mcpServers": {
+    "caddy-lab": {
+      "command": "dotnet",
+      "args": ["/ABSOLUTNA/SCIEZKA/docs/labs/05-mcp/src/Caddy.Mcp/bin/Debug/net10.0/Caddy.Mcp.dll"]
+    }
+  }
 }
 ```
 
-To przykładowy schemat danych, który można zaimplementować w ramach ćwiczenia.
+Przykładowe polecenie: „Sprawdź aktywny backend, przełącz na api-b i ponownie odczytaj konfigurację”. Efekt sprawdź niezależnie przez curl.
 
-**Pytanie:**
+## Reset i zakończenie
 
-> Czym różni się odczyt informacji o urządzeniu przez Resource od wywołania narzędzia GetDeviceInfo?
+Przy działającym Caddy, z katalogu laboratorium:
 
-## 5. Prompts
-
-Prompts pozwalają serwerowi MCP udostępniać wielokrotnego użytku szablony interakcji z modelem.
-
-Przykładowy prompt:
-
-```text
-energy-report
+```sh
+curl -X POST http://127.0.0.1:2019/load -H "Content-Type: application/json" --data-binary @caddy/caddy.json
 ```
 
-Argumenty:
+Reset przywraca `api-a`. Zatrzymaj Inspector, backendy i Caddy przez Ctrl+C w ich terminalach. Uruchamiaj Caddy ponownie z `--config caddy/caddy.json`, bez `--resume`.
 
-- liczba godzin,
-- cena energii za kWh.
+## Rozwiązywanie problemów
 
-Przykładowe zastosowanie:
+| Objaw | Co sprawdzić |
+|---|---|
+| Port zajęty | Zamknij poprzedni proces labu; porty 2019, 8080, 5101 i 5102 muszą być wolne |
+| `502 Bad Gateway` | Caddy działa, ale wybrany backend jest wyłączony lub niedostępny |
+| Brak połączenia z Caddy | Czy działa proces i API na 127.0.0.1:2019? |
+| `404` przy `/id/lab-proxy/...` | Wczytano inną konfigurację Caddy; wykonaj reset |
+| Wciąż komunikat TODO | Zbuduj projekt i ponownie połącz proces MCP |
+| Inspector nie łączy się | Sprawdź ścieżkę DLL, katalog roboczy i logi stderr; stdout musi zawierać wyłącznie MCP |
 
-> Przygotuj raport kosztów użytkowania lampki przez 500 godzin przy cenie 4,50 zł/kWh.
+API administracyjne kontroluje cały serwer: w konfiguracji labu nasłuchuje wyłącznie na loopback. Narzędzie zmiany ma przyjmować tylko nazwy dwóch przygotowanych backendów.
 
-Serwer MCP może zwrócić szablon wiadomości zawierający instrukcje przygotowania raportu.
+## Dokumentacja
 
-**Ważne:** MCP Prompt nie wykonuje samodzielnie obliczeń ani nie uruchamia modelu. Dostarcza wiadomości, które klient może wykorzystać podczas interakcji z LLM.
-
-## 6. MCP Inspector
-
-Do poznawania i testowania możliwości serwera wykorzystamy **MCP Inspector**.
-
-Uruchomienie:
-
-```bash
-npx @modelcontextprotocol/inspector
-```
-
-Inspector umożliwia:
-
-- odkrywanie narzędzi,
-- wywoływanie narzędzi,
-- przeglądanie zasobów,
-- odczytywanie zasobów,
-- przeglądanie dostępnych promptów,
-- pobieranie promptów wraz z argumentami.
-
-Pozwala więc testować serwer MCP bez modelu językowego.
-
-## 7. Środowisko
-
-Wymagane:
-
-- .NET SDK zgodny z projektami Shelly,
-- Node.js i npm,
-- MCP Inspector,
-- repozytorium Shelly.
-
-Dodatkowo:
-
-- Ollama — do eksperymentów wykorzystujących model językowy.
-
-### Uruchomienie symulatora
-
-```bash
-dotnet run --project 00-Shelly.Simulator
-```
-
-### Uruchomienie serwera MCP
-
-Skorzystaj z instrukcji uruchamiania projektu `03-Shelly.Mcp`.
-
-Zwróć uwagę na wykorzystywany transport MCP oraz sposób przekazywania adresu API Shelly.
-
-### Uruchomienie klienta MCP
-
-```bash
-dotnet run --project 04-Shelly.McpClient
-```
-
-Dokładne argumenty uruchomieniowe sprawdź w dokumentacji projektu.
-
-## 8. Eksperymenty
-
-| Eksperyment | Temat | Główne pytanie |
-|---|---|---|
-| EXP-00 | MCP Inspector | Jak odkrywać możliwości serwera MCP? |
-| EXP-01 | Tools | Jak udostępnić nową operację? |
-| EXP-02 | Resources | Jak udostępnić dane bez definiowania narzędzia? |
-| EXP-03 | Prompts | Jak udostępnić szablon interakcji? |
-| EXP-04 | MCP Client | Jak aplikacja wykorzystuje możliwości serwera? |
-
-Szczegółowe zadania:
-
-**[Eksperymenty — experiments.md](./experiments.md)**
-
-## 9. Najważniejsze pytania
-
-1. Czy MCP wymaga modelu językowego?
-2. Czym różnią się Tools, Resources i Prompts?
-3. Czy każde API powinno być udostępniane jako Tool?
-4. Kto decyduje o wykorzystaniu Resource?
-5. Czy MCP Prompt jest tym samym co instrukcja systemowa?
-6. Czy dodanie nowego narzędzia wymaga zmiany kodu klienta?
-
-## Materiały
-
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [MCP — Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools)
-- [MCP — Resources](https://modelcontextprotocol.io/specification/2025-06-18/server/resources)
-- [MCP — Prompts](https://modelcontextprotocol.io/specification/2025-06-18/server/prompts)
+- [Caddy: wprowadzenie](https://caddyserver.com/docs/getting-started)
+- [Caddy: Admin API — ścieżki, metody i atomowość](https://caddyserver.com/docs/api)
+- [Caddy: reverse_proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
+- [Oficjalny C# SDK MCP](https://github.com/modelcontextprotocol/csharp-sdk)
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector)
-- [Model Context Protocol — C# SDK](https://github.com/modelcontextprotocol/csharp-sdk)
+- [Wykład o MCP](../../lectures/04-mcp/README.md)
 
-## Podsumowanie
-
-Po laboratorium powinieneś rozumieć:
-
-1. Jak działa serwer MCP.
-2. Jak odkrywać możliwości serwera.
-3. Czym różnią się Tools, Resources i Prompts.
-4. Jak udostępniać nowe możliwości serwera.
-5. Jak testować serwer bez modelu językowego.
-6. Jak klient MCP współpracuje z modelem.
-
-> **Tool Calling pozwala modelowi wybierać działania.**
->
-> **MCP pozwala aplikacjom udostępniać narzędzia, dane i szablony interakcji.**
+Wcześniejszy wariant ze sprzętem Shelly: [instrukcja](shelly.md) i [eksperymenty](experiments.md).
