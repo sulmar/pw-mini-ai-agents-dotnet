@@ -384,6 +384,6 @@ Na kolejnym wykładzie zajmiemy się:
 - weryfikacją rezultatów,
 - obsługą błędów.
 
-**[Wykład 09 — Architektura agentów AI →](../09-architektura-agentow/README.md)**
+**[Wykład 09 — Architektura agentów AI →](../09-multi-agent/README.md)**
 
 > **Agent to nie tylko model z dostępem do narzędzi. To system, który potrafi wykorzystać dostępne możliwości do realizacji celu.**

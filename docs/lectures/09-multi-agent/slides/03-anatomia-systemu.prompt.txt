@@ -1,0 +1,20 @@
+Generate ONE minimalist Polish lecture slide, exactly landscape 3:2 1536x1024. Attached image is the exact STYLE reference. Same near-black charcoal chalkboard, subtle chalk texture, large white handwritten sans title at top left, long white chalk underline across width, rounded chalk outline boxes in light green, yellow and light blue. Spacious, very simple. No characters photos icons paragraphs footer or extra commentary.
+Title exactly "Anatomia systemu wieloagentowego". Fit one line across top, readable, white chalk.
+Main diagram: THREE large vertical rounded outline panels side by side across middle, equal width, generous gaps and margins. Left outlined light green, heading "Programista"; middle outlined yellow, heading "Tester"; right outlined light blue, heading "Dokumentalista". Thin chalk separator below each heading.
+Inside each panel FOUR short entries arranged identically, left aligned, with labels and values on separate lines if needed:
+LEFT:
+"Rola: tworzy kod"
+"Instrukcje: napisz skrypt"
+"Narzędzia: edytor"
+"Kontekst: wymagania"
+MIDDLE:
+"Rola: sprawdza"
+"Instrukcje: znajdź błędy"
+"Narzędzia: symulator"
+"Kontekst: kod + testy"
+RIGHT:
+"Rola: opisuje"
+"Instrukcje: wyjaśnij"
+"Narzędzia: dokumentacja"
+"Kontekst: kod + wyniki"
+Body text white, panel headings in outline color. Keep letter sizes comfortable and consistent. Panels have black interiors. No arrows between panels, no coordinator, no extra nodes. Diagram only, generous empty space below. All labels exactly supplied, correct Polish diacritics in "wieloagentowego", "Narzędzia", "Kontekst", "wymagania", "znajdź błędy", "wyjaśnij". Match reference chalk stroke thickness and visual simplicity.

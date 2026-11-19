@@ -1,0 +1,1 @@
+Black chalkboard, minimal chalk diagram. Title: Od jednego agenta do zespołu. Jeden agent: Agent. Arrow to Zespół agentów: Programista, Tester, Dokumentalista. Below: Podział • Specjalizacja • Równoległość. 3:2. Reference: 06-code-execution/slides/02-tool-calling.png. Generated with built-in imagegen.
