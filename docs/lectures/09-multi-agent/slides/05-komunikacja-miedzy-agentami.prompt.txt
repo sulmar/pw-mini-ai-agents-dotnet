@@ -1,0 +1,8 @@
+Generate ONE very minimalist Polish educational slide, landscape 3:2 1536x1024. Attached image is exact STYLE reference: black charcoal chalkboard, faint chalk texture, white handwritten sans title top left, long white chalk rule beneath, rounded outline rectangles in yellow light green light blue, white chalk arrows. Sparse diagram only, lots of empty space, no paragraphs, commentary, footer, icons, robots or photos.
+Title exactly "Komunikacja między agentami".
+Main diagram centered below title: three large rounded boxes in horizontal row, far enough apart for arrow labels. LEFT yellow "Koordynator"; CENTER light green "Programista"; RIGHT light blue "Tester". Black box interiors.
+Forward white arrow above centerline from Koordynator to Programista, labeled on two lines "Wymagania" and "+ kryteria".
+Forward white arrow above centerline from Programista to Tester, labeled on two lines "Kod" and "+ wymagania".
+A separate white return path below boxes from Tester back to Programista: down from bottom edge of Tester, left under gap, then up with arrowhead into bottom edge of Programista. Label below return path exactly "Raport z testów".
+Below main diagram centered ONE small white rounded outlined rectangle containing exact text "Cel • Dane wejściowe • Oczekiwany wynik".
+No other text. Make labels readable, correct Polish diacritics in "między", "Wymagania", "Raport z testów", "Dane wejściowe", "Oczekiwany wynik". No arrow crossings or overlaps. Match reference's simple clean chalkboard series.

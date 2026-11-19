@@ -1,0 +1,7 @@
+Generate ONE minimalist Polish lecture slide, landscape 3:2 1536x1024. Attached image is exact STYLE reference: near-black charcoal chalkboard, subtle chalk texture, handwritten sans white title top left with long white underline, rounded chalk outline boxes light green yellow light blue, white arrows. Very simple, generous whitespace. No people photos icons paragraphs footer or commentary.
+Title "Wzorce współpracy".
+Three separated horizontal diagram rows below title, row labels on left, diagrams to right.
+Row 1 label "Sekwencja": blue box "Agent A" → green box "Agent B" → yellow box "Agent C". White right arrows.
+Row 2 label "Równolegle": white box "Zadanie" branches to two vertically stacked boxes blue "Agent A" and green "Agent B"; both branches converge into yellow box "Wynik" at right. All arrows point from task to agents to result, no connection between agents.
+Row 3 label "Koordynator": yellow box "Koordynator" at left connected by separate white DOUBLE-HEADED arrows to two vertically stacked boxes at right: blue "Agent A" and green "Agent B". No connection between specialists.
+Exactly these labels, correct Polish diacritics. All boxes black inside. Tidy layout with no arrow crossings, consistent lettering and stroke weights. No additional words, captions, numbering or explanations.
