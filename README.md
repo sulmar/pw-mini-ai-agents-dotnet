@@ -29,6 +29,7 @@ Studenci równolegle rozwijają własne projekty agentowe.
 - [Projekt semestralny](docs/project.md) — zasady realizacji własnego projektu agentowego i minimalne wymagania.
 - [Zasady oceniania](docs/grading.md) — punktacja projektu, kolokwium i zasady ustalania oceny końcowej.
 - [Modele LLM](docs/models.md) — dostępne i rekomendowane modele oraz sposoby korzystania z nich.
+- [Ciekawe znaleziska](docs/ciekawe-znaleziska.md) — projekty i narzędzia wokół agentów AI wyszukane przez studentów.
 
 
 
