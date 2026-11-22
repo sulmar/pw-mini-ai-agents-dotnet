@@ -158,5 +158,6 @@ W EXP-01 modele są porównywane w jednym przebiegu, a EXP-02 ... EXP-04 urucham
 │   ├── prompt-examples.csv  # przykłady do one-shot i few-shot
 │   └── notes.csv            # prawdziwe notatki kierowców (bez etykiet)
 └── reports/
+    ├── README.md            # zestawienie raportów zespołów
     └── template.md
 ```
