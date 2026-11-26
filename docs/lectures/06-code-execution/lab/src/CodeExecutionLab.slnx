@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CodeExecutionLab.Tests/CodeExecutionLab.Tests.csproj" />
+  <Project Path="CodeExecutionLab/CodeExecutionLab.csproj" />
+</Solution>
