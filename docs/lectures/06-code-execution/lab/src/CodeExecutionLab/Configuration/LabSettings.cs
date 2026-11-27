@@ -5,6 +5,6 @@ public sealed record LabSettings(string OllamaUrl, string Model, string RuntimeN
 {
     public static LabSettings FromEnvironment() => new(
         OllamaUrl: Environment.GetEnvironmentVariable("OLLAMA_URL") ?? "http://localhost:11434",
-        Model: Environment.GetEnvironmentVariable("OLLAMA_MODEL") ?? "llama3.1",
-        RuntimeName: Environment.GetEnvironmentVariable("CODE_RUNTIME") ?? "python");
+        Model: Environment.GetEnvironmentVariable("OLLAMA_MODEL") ?? "qwen3:8b",
+        RuntimeName: Environment.GetEnvironmentVariable("CODE_RUNTIME") ?? "lua");
 }

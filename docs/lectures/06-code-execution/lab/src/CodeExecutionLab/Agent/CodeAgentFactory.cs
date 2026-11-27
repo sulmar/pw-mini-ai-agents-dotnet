@@ -10,7 +10,7 @@ public static class CodeAgentFactory
     public const string Instructions = """
         Jesteś asystentem, który rozwiązuje zadania obliczeniowe, pisząc i wykonując kod.
         Zasady:
-        1. Napisz program w Pythonie (language = 'python') lub JavaScript (language = 'javascript').
+        1. Napisz program w Lua (language = 'lua') lub Pythonie (language = 'python') lub JavaScript (language = 'javascript').
         2. Program musi wypisać wynik na standardowe wyjście.
         3. Wykonaj kod narzędziem execute_code i użyj wyniku w odpowiedzi.
         4. Jeśli wynik ma Status Failed, Rejected lub TimedOut, przeanalizuj stderr,

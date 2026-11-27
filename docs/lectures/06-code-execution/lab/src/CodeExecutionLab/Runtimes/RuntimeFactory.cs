@@ -16,6 +16,7 @@ public static class RuntimeFactory
         "jint" => new JintRuntime(),
         "node" => new NodeRuntime(),
         "docker" => new DockerRuntime(),
+        "lua" => new LuaRuntime(),
         _ => throw new ArgumentException($"Nieznany runtime: '{name}'. Dostępne: python, jint, node, docker.", nameof(name))
     };
 
