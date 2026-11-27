@@ -18,7 +18,7 @@ public sealed class ExecuteCodeTool(ICodeRuntime runtime, ExecutionLimits? limit
     [Description("Wykonuje kod w wybranym języku i zwraca stdout, stderr oraz kod wyjścia. " +
                  "Program musi wypisać wynik na standardowe wyjście (print / console.log).")]
     public async Task<string> ExecuteCodeAsync(
-        [Description("Język kodu: 'python' albo 'javascript'.")] string language,
+        [Description("Język kodu: 'python', 'javascript', 'lua' albo 'webassembly' (moduł WAT z eksportem _start, wypisujący przez WASI fd_write).")] string language,
         [Description("Kod źródłowy do wykonania. Bez dostępu do sieci i plików.")] string code,
         CancellationToken cancellationToken = default)
     {

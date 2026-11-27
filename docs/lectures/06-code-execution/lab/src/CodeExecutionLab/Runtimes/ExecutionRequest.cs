@@ -3,7 +3,9 @@ namespace CodeExecutionLab.Runtimes;
 public enum CodeLanguage
 {
     Python,
-    JavaScript
+    JavaScript,
+    WebAssembly,
+    Lua
 }
 
 /// <summary>Żądanie wykonania kodu.</summary>
