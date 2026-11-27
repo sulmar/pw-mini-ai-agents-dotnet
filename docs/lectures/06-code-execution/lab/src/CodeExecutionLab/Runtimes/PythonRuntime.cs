@@ -2,24 +2,17 @@ namespace CodeExecutionLab.Runtimes;
 
 /// <summary>
 /// Runtime uruchamiający Python w zewnętrznym procesie (python3).
+/// Kod przekazywany przez stdin; <c>-I</c> ignoruje zmienne PYTHON* i katalog użytkownika.
 /// </summary>
 public sealed class PythonRuntime : ICodeRuntime
 {
-    // Wskazówki:
-    //  - System.Diagnostics.Process + ProcessStartInfo (RedirectStandardOutput/Error = true).
-    //  - Kod przekaż przez stdin (python3 -) albo plik tymczasowy w osobnym katalogu.
-    //  - Czyść ProcessStartInfo.Environment (nie przekazuj zmiennych ANTHROPIC_*).
-    //  - Po anulowaniu: process.Kill(entireProcessTree: true) i WaitForExitAsync.
-    //  - Wynik: ExitCode, ReadToEndAsync dla stdout/stderr (z limitem rozmiaru).
-
     public Task<ExecutionResult> ExecuteAsync(ExecutionRequest request, CancellationToken cancellationToken)
     {
-        // TODO: zaimplementuj wykonanie kodu zgodnie z kontraktem ICodeRuntime:
-        //  - odrzuć język inny niż Python (ExecutionResult.Rejected),
-        //  - uruchom kod poza procesem aplikacji (lub przerwij interpreter),
-        //  - po anulowaniu zatrzymaj wykonanie i zwróć ExecutionStatus.Cancelled,
-        //  - błędy kodu zwróć jako Failed z stderr (bez wyjątków),
-        //  - nie przekazuj kluczy API do środowiska wykonania.
-        throw new NotImplementedException("TODO: PythonRuntime — implementacja ExecuteAsync.");
+        if (request.Language != CodeLanguage.Python)
+        {
+            return Task.FromResult(ExecutionResult.Rejected($"Nieobsługiwany język: {request.Language}."));
+        }
+
+        return ProcessExecutor.RunAsync("python3", ["-I", "-"], request.Code, cancellationToken);
     }
 }
