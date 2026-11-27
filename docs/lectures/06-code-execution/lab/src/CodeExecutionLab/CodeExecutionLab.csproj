@@ -12,6 +12,7 @@
     <PackageReference Include="LuaCSharp" Version="0.5.8" />
     <PackageReference Include="Microsoft.Agents.AI.Workflows" Version="1.28.0" />
     <PackageReference Include="OllamaSharp" Version="5.5.2" />
+    <PackageReference Include="pythonnet" Version="3.2.1" />
     <PackageReference Include="Wasmtime" Version="50.0.1" />
   </ItemGroup>
 

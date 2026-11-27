@@ -15,6 +15,7 @@ public static class RuntimeFactory
     public static ICodeRuntime CreateBase(string name) => name.ToLowerInvariant() switch
     {
         "python" => new PythonRuntime(),
+        "pythonnet" => new PythonNetRuntime(),
         "jint" => new JintRuntime(),
         "node" => new NodeRuntime(),
         "docker" => new DockerRuntime(),
