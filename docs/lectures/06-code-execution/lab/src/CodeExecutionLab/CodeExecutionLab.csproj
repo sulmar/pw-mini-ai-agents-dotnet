@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Jint" Version="4.18.1" />
     <PackageReference Include="LuaCSharp" Version="0.5.8" />
     <PackageReference Include="Microsoft.Agents.AI.Workflows" Version="1.28.0" />
     <PackageReference Include="OllamaSharp" Version="5.5.2" />
