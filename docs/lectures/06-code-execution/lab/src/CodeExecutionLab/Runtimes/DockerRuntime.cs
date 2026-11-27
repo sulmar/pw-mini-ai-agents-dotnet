@@ -1,24 +1,38 @@
 namespace CodeExecutionLab.Runtimes;
 
 /// <summary>
-/// Runtime uruchamiający kod w izolowanym kontenerze (wariant zaawansowany, opcjonalny).
+/// Runtime uruchamiający Python w jednorazowym kontenerze Docker (wariant zaawansowany, opcjonalny).
+/// Kontener bez sieci, z limitem pamięci i CPU, bez montowania katalogów hosta.
+/// Przy anulowaniu klient <c>docker</c> jest zabijany, a kontener kończony przez <c>docker kill</c>.
 /// </summary>
 public sealed class DockerRuntime : ICodeRuntime
 {
-    // Wskazówki:
-    //  - Proces: docker run --rm -i --network none --memory 128m --cpus 0.5 <obraz> python -
-    //  - Kontener kończysz przy anulowaniu: docker kill <nazwa> (ustaw --name).
-    //  - Nie montuj katalogów hosta; użyj obrazu bez kluczy i sekretów.
-    //  - Obsługuj brak działającego Dockera jako ExecutionResult.Failed, nie wyjątek.
+    public const string Image = "python:3.12-slim-bookworm";
 
     public Task<ExecutionResult> ExecuteAsync(ExecutionRequest request, CancellationToken cancellationToken)
     {
-        // TODO: zaimplementuj wykonanie kodu zgodnie z kontraktem ICodeRuntime:
-        //  - odrzuć język inny niż Python (ExecutionResult.Rejected),
-        //  - uruchom kod poza procesem aplikacji (lub przerwij interpreter),
-        //  - po anulowaniu zatrzymaj wykonanie i zwróć ExecutionStatus.Cancelled,
-        //  - błędy kodu zwróć jako Failed z stderr (bez wyjątków),
-        //  - nie przekazuj kluczy API do środowiska wykonania.
-        throw new NotImplementedException("TODO: DockerRuntime — implementacja ExecuteAsync.");
+        if (request.Language != CodeLanguage.Python)
+        {
+            return Task.FromResult(ExecutionResult.Rejected($"Nieobsługiwany język: {request.Language}."));
+        }
+
+        var containerName = $"codelab-{Guid.NewGuid():N}";
+
+        return ProcessExecutor.RunAsync(
+            "docker",
+            [
+                "run", "--rm", "-i",
+                "--name", containerName,
+                "--network", "none",
+                "--memory", "128m",
+                "--cpus", "0.5",
+                "--pull", "never",
+                Image,
+                "python", "-I", "-",
+            ],
+            request.Code,
+            cancellationToken,
+            onCancelled: () => ProcessExecutor.RunAsync(
+                "docker", ["kill", containerName], string.Empty, CancellationToken.None));
     }
 }
