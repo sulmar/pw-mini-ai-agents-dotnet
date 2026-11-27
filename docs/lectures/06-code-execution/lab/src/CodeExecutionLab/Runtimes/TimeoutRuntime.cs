@@ -31,7 +31,13 @@ public sealed class TimeoutRuntime(ICodeRuntime inner, TimeSpan? grace = null) :
 
         if (finished == work)
         {
-            return await work;
+            var result = await work;
+
+            // Runtime mógł zdążyć zakończyć się z własnym Cancelled po wygaśnięciu limitu czasu
+            // (token był anulowany przez timeoutCts) — wtedy raportujemy TimedOut, nie Cancelled.
+            return result.Status == ExecutionStatus.Cancelled && timeoutCts.IsCancellationRequested
+                ? ExecutionResult.TimedOut(request.Timeout)
+                : result;
         }
 
         // Limit czasu albo anulowanie z zewnątrz. Dajemy runtime'owi chwilę na sprzątanie.
