@@ -24,11 +24,12 @@ public class RuntimeContractTests
             (drop (call $fd_write (i32.const 1) (i32.const 8) (i32.const 1) (i32.const 16)))))
         """;
 
-    private static string Code(string python, string javascript, string lua, string wasm) => Language switch
+    private static string Code(string python, string javascript, string lua, string wasm, string go) => Language switch
     {
         CodeLanguage.Lua => lua,
         CodeLanguage.JavaScript => javascript,
         CodeLanguage.WebAssembly => wasm,
+        CodeLanguage.Go => go,
         _ => python,
     };
 
@@ -50,7 +51,8 @@ public class RuntimeContractTests
     {
         var result = await RunAsync(
             RuntimeFactory.CreateBase(RuntimeName),
-            Code("print('ok')", "console.log('ok')", "print('ok')", WasmPrints42));
+            Code("print('ok')", "console.log('ok')", "print('ok')", WasmPrints42,
+                "package main\n\nfunc main() { println(\"ok\") }"));
 
         Assert.Equal(ExecutionStatus.Succeeded, result.Status);
         Assert.Equal(0, result.ExitCode);
@@ -61,7 +63,8 @@ public class RuntimeContractTests
     {
         var result = await RunAsync(
             RuntimeFactory.CreateBase(RuntimeName),
-            Code("print(6 * 7)", "console.log(6 * 7)", "print(6 * 7)", WasmPrints42));
+            Code("print(6 * 7)", "console.log(6 * 7)", "print(6 * 7)", WasmPrints42,
+                "package main\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(6 * 7) }"));
 
         Assert.Contains("42", result.Stdout);
     }
@@ -71,7 +74,8 @@ public class RuntimeContractTests
     {
         var result = await RunAsync(
             RuntimeFactory.CreateBase(RuntimeName),
-            Code("def (:", "function (", "print(", "(module (func"));
+            Code("def (:", "function (", "print(", "(module (func",
+                "package main\n\nfunc main() {"));
 
         Assert.Equal(ExecutionStatus.Failed, result.Status);
         Assert.False(string.IsNullOrWhiteSpace(result.Stderr));
@@ -83,7 +87,8 @@ public class RuntimeContractTests
         var result = await RunAsync(
             RuntimeFactory.CreateBase(RuntimeName),
             Code("raise ValueError('x')", "throw new Error('x')", "error('x')",
-                "(module (func (export \"_start\") unreachable))"));
+                "(module (func (export \"_start\") unreachable))",
+                "package main\n\nfunc main() { panic(\"x\") }"));
 
         Assert.Equal(ExecutionStatus.Failed, result.Status);
         Assert.False(string.IsNullOrWhiteSpace(result.Stderr));
@@ -96,7 +101,8 @@ public class RuntimeContractTests
         var result = await RunAsync(
             runtime,
             Code("import time\ntime.sleep(60)", "while (true) {}", "while true do end",
-                "(module (func (export \"_start\") (loop $l (br $l))))"),
+                "(module (func (export \"_start\") (loop $l (br $l))))",
+                "package main\n\nfunc main() { for {} }"),
             TimeSpan.FromSeconds(5));
 
         Assert.Equal(ExecutionStatus.TimedOut, result.Status);
@@ -109,7 +115,8 @@ public class RuntimeContractTests
         var result = await RunAsync(
             RuntimeFactory.CreateBase(RuntimeName),
             Code("while True:\n    pass", "while (true) {}", "while true do end",
-                "(module (func (export \"_start\") (loop $l (br $l))))"),
+                "(module (func (export \"_start\") (loop $l (br $l))))",
+                "package main\n\nfunc main() { for {} }"),
             TimeSpan.FromSeconds(30),
             cts.Token);
 

@@ -26,7 +26,9 @@ internal static class ProcessExecutor
         IReadOnlyList<string> arguments,
         string input,
         CancellationToken cancellationToken,
-        Func<Task>? onCancelled = null)
+        Func<Task>? onCancelled = null,
+        string? workingDirectory = null,
+        IReadOnlyDictionary<string, string>? extraEnvironment = null)
     {
         var startInfo = new ProcessStartInfo(fileName)
         {
@@ -38,6 +40,7 @@ internal static class ProcessExecutor
             StandardInputEncoding = Encoding.UTF8,
             StandardOutputEncoding = Encoding.UTF8,
             StandardErrorEncoding = Encoding.UTF8,
+            WorkingDirectory = workingDirectory ?? string.Empty,
         };
 
         foreach (var argument in arguments)
@@ -50,6 +53,14 @@ internal static class ProcessExecutor
         {
             var value = Environment.GetEnvironmentVariable(name);
             if (value is not null)
+            {
+                startInfo.Environment[name] = value;
+            }
+        }
+
+        if (extraEnvironment is not null)
+        {
+            foreach (var (name, value) in extraEnvironment)
             {
                 startInfo.Environment[name] = value;
             }

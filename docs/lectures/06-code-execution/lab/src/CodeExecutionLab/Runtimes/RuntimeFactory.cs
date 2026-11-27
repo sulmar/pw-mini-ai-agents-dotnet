@@ -21,7 +21,8 @@ public static class RuntimeFactory
         "docker" => new DockerRuntime(),
         "lua" => new LuaRuntime(),
         "webassembly" => new WebAssemblyRuntime(),
-        _ => throw new ArgumentException($"Nieznany runtime: '{name}'. Dostępne: python, jint, node, webassembly, docker.", nameof(name))
+        "go" => new GoRuntime(),
+        _ => throw new ArgumentException($"Nieznany runtime: '{name}'. Dostępne: python, pythonnet, jint, node, lua, webassembly, go, docker.", nameof(name))
     };
 
     public static CodeLanguage LanguageFor(string name) => name.ToLowerInvariant() switch
@@ -29,6 +30,7 @@ public static class RuntimeFactory
         "jint" or "node" => CodeLanguage.JavaScript,
         "webassembly" => CodeLanguage.WebAssembly,
         "lua" => CodeLanguage.Lua,
+        "go" => CodeLanguage.Go,
         _ => CodeLanguage.Python
     };
 }

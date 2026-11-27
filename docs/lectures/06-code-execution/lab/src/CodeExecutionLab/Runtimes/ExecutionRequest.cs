@@ -5,7 +5,8 @@ public enum CodeLanguage
     Python,
     JavaScript,
     WebAssembly,
-    Lua
+    Lua,
+    Go
 }
 
 /// <summary>Żądanie wykonania kodu.</summary>
