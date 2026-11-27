@@ -6,7 +6,6 @@ public sealed class WebAssemblyRuntime : ICodeRuntime
 {
     // dotnet add package Wasmtime
     private const long MaxMemoryBytes = 64 * 1024 * 1024;
-    private const ulong MaxFuel = 100_000_000;
 
     public Task<ExecutionResult> ExecuteAsync(
         ExecutionRequest request,
@@ -45,15 +44,15 @@ public sealed class WebAssemblyRuntime : ICodeRuntime
         {
             Directory.CreateDirectory(directory);
 
+            // Czas wykonania ogranicza przerwanie epoką (timeout / anulowanie), nie budżet paliwa:
+            // budżet paliwa zużywał się w kilkadziesiąt ms i przerywał pętle przed limitem czasu.
             using var config = new Config()
-                .WithEpochInterruption(true)
-                .WithFuelConsumption(true);
+                .WithEpochInterruption(true);
 
             using var engine = new Engine(config);
             using var store = new Store(engine);
 
             store.SetLimits(memorySize: MaxMemoryBytes);
-            store.Fuel = MaxFuel;
             store.SetEpochDeadline(1);
 
             using var registration = cancellationToken.Register(
